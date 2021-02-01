@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 // morgan will call next function for logs
 
 const productRoutes = require("./api/routes/products");
@@ -24,10 +25,16 @@ app.use((req, res, next) => {
   }
   next();
 });
-
 // Routes 
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+
+mongoose.connect("mongodb+srv://amit:test@api-cluster.1njb6.mongodb.net/api_data?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(function () {
+    console.log('Connection Established....');
+});
 
 app.use((req, res, next) => {
   const error = new Error("Not Found");
