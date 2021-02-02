@@ -4,16 +4,14 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 // morgan will call next function for logs
-
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
-
+const userRoutes = require("./api/routes/user");
 app.use(morgan("dev"));
 // image folder
 app.use("/uploads", express.static("uploads"))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 // handling cors
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -30,6 +28,8 @@ app.use((req, res, next) => {
 // Routes 
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/user", userRoutes);
+
 
 mongoose.connect("mongodb+srv://amit:test@api-cluster.1njb6.mongodb.net/api_data?retryWrites=true&w=majority", {
     useNewUrlParser: true,
