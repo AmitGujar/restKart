@@ -63,6 +63,7 @@ router.post("/login", (req, res, next) => {
           });
         }
         if (result) {
+          // token creation
           const token = jwt.sign({
             email: user[0],
             userId: user[0].id,
@@ -82,8 +83,8 @@ router.post("/login", (req, res, next) => {
       });
     })
     .catch((err) => {
-      res.status(200).json({
-        message: "user deleted successfully",
+      res.status(500).json({
+        error: err,
       });
     });
 });
